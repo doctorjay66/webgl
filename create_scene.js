@@ -39,10 +39,10 @@ function create_scene() {
 	//camera.lookAt(scene.position);
 	camera.lookAt(new THREE.Vector3(60, 10, 0));
     scene.add(camera);    
-    PLAYERS['p1'] = new THREE.PlayerChar();
+    /*PLAYERS['p1'] = new THREE.PlayerChar();
     PLAYERS['p1'].load("figure_rigged_run_new.json", new THREE.Vector3(15*4, 0, 0), 0, add_player, 0xFF0000);
     PLAYERS['p2'] = new THREE.PlayerChar();
-    PLAYERS['p2'].load("figure_rigged_run_new.json", new THREE.Vector3(15*4+10, 0, -10), 0, add_player, 0xFF0000);   
+    PLAYERS['p2'].load("figure_rigged_run_new.json", new THREE.Vector3(15*4+10, 0, -10), 0, add_player, 0xFF0000);*/
     //PLAYERS['save'] = new THREE.PlayerChar();
     //PLAYERS['save'].load("figure_rigged_save_new.json", new THREE.Vector3(35*4-15, 0, 0), Math.PI/2,add_player, 0x0000BB); 
     //dest_point = new THREE.Vector3(20,0,20);
