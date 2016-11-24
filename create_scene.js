@@ -9,9 +9,9 @@ function create_scene() {
     document.body.appendChild( renderer.domElement );
 	scene = new THREE.Scene();
 	var planeGeometry = new THREE.PlaneBufferGeometry(35*4*2, 35*4*2, 1, 1);
-	//var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
-	var mesh_text = new THREE.ImageUtils.loadTexture('https://rawgit.com/doctorjay66/webgl/master/campo_1.jpg');
-	var planeMaterial = new THREE.MeshBasicMaterial({map:mesh_text});
+	var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
+	//var mesh_text = new THREE.ImageUtils.loadTexture('https://rawgit.com/doctorjay66/webgl/master/campo_1.jpg');
+	//var planeMaterial = new THREE.MeshBasicMaterial({map:mesh_text});
 	plane = new THREE.Mesh(planeGeometry, planeMaterial);
 	plane.receiveShadow = true;
 	plane.rotation.x = -1/2 * Math.PI; plane.position.x = 0; plane.position.y = 0; plane.position.z = 0;
