@@ -29,7 +29,8 @@ function init() {
 	
 	var mesh_text = new THREE.ImageUtils.loadTexture('campo_1.jpg');
 	var planeGeometry = new THREE.PlaneBufferGeometry(35*4*2, 35*4*2, 1, 1);
-	var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
+	//var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
+	var planeMaterial = new THREE.MeshBasicMaterial({map:mesh_text});
 	var ground = new THREE.Mesh(planeGeometry, planeMaterial);
 	ground.receiveShadow = true;
 	ground.position.set( 0, FLOOR, 0 );
