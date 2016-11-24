@@ -105,6 +105,6 @@ function initGUI() {
 function animate() {
     requestAnimationFrame( animate, renderer.domElement );
     var delta = clock.getDelta();
-    THREE.AnimationHandler.update( delta );
+    THREE.AnimationHandler.update( delta * 0.5 );
     renderer.render( scene, camera );
 }
