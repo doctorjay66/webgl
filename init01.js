@@ -45,7 +45,7 @@ function init() {
     renderer.autoClear = true;
     container.appendChild( renderer.domElement );
     var loader = new THREE.JSONLoader();
-	loader.load( "../assets/models/figure_rigged_run_new.json", function ( geometry, materials ) {
+	loader.load( "figure_rigged_run_new.json", function ( geometry, materials ) {
 		createScene( geometry, materials,15*4, 0, 0, 1, 0xFF0000 )
 	});
 	
