@@ -27,10 +27,10 @@ function init() {
 	scene = new THREE.Scene();
 	scene.add( camera );
 	
-	var mesh_text = new THREE.ImageUtils.loadTexture('https://rawgit.com/doctorjay66/webgl/master/campo_1.jpg');
+	//var mesh_text = new THREE.ImageUtils.loadTexture('https://rawgit.com/doctorjay66/webgl/master/campo_1.jpg');
 	var planeGeometry = new THREE.PlaneBufferGeometry(35*4*2, 35*4*2, 1, 1);
-	//var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
-	var planeMaterial = new THREE.MeshBasicMaterial({map:mesh_text});
+	var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
+	//var planeMaterial = new THREE.MeshBasicMaterial({map:mesh_text});
 	var ground = new THREE.Mesh(planeGeometry, planeMaterial);
 	ground.receiveShadow = true;
 	ground.position.set( 0, FLOOR, 0 );
