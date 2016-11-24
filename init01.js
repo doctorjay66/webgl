@@ -26,7 +26,8 @@ function init() {
 
 	scene = new THREE.Scene();
 	scene.add( camera );
-		
+	
+	var mesh_text = new THREE.ImageUtils.loadTexture('campo_1.jpg');
 	var planeGeometry = new THREE.PlaneBufferGeometry(35*4*2, 35*4*2, 1, 1);
 	var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
 	var ground = new THREE.Mesh(planeGeometry, planeMaterial);
