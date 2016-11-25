@@ -8,13 +8,13 @@
 </head>
 <body>
 
-<script src="js/Three.js"></script>
-<script src="js/Detector.js"></script>
-<script src="js/Stats.js"></script>
+<script src="Three-r60.js"></script>
+<script src="Detector.js"></script>
+<!--<script src="js/Stats.js"></script>
 <script src="js/OrbitControls.js"></script>
 <script src="js/KeyboardState.js"></script>
 <script src="js/THREEx.FullScreen.js"></script>
-<script src="js/THREEx.WindowResize.js"></script>
+<script src="js/THREEx.WindowResize.js"></script>-->
 
 <!-- Code to display an information button and box when clicked. -->
 <script src="js/jquery-1.9.1.js"></script>
@@ -74,12 +74,12 @@ function init()
 	THREEx.WindowResize(renderer, camera);
 	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
 	// CONTROLS
-	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	//controls = new THREE.OrbitControls( camera, renderer.domElement );
 	// STATS
-	stats = new Stats();
+	/*stats = new Stats();
 	stats.domElement.style.position = 'absolute';
 	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.zIndex = 100;
+	stats.domElement.style.zIndex = 100;*/
 	container.appendChild( stats.domElement );
 	// LIGHT
 	var light = new THREE.PointLight(0xffffff);
@@ -117,10 +117,10 @@ function animate()
 {
     requestAnimationFrame( animate );
 	render();		
-	update();
+	//update();
 }
 
-function update()
+/*function update()
 {
 	if ( keyboard.pressed("z") ) 
 	{	  
@@ -129,7 +129,7 @@ function update()
 	
 	controls.update();
 	stats.update();
-}
+}*/
 
 function render() 
 {
