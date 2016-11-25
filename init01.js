@@ -41,7 +41,11 @@ function init() {
     spotLight.castShadow = true;
     scene.add(spotLight);
     
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    //renderer = new THREE.WebGLRenderer( { antialias: true } );
+   	if ( Detector.webgl )
+		renderer = new THREE.WebGLRenderer( {antialias:true} );
+	else
+		renderer = new THREE.CanvasRenderer();
     renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
     renderer.setClearColor( '#b0c4de', 1 );
     renderer.autoClear = true;
