@@ -40,7 +40,7 @@ function createScene(param) {
    	//$("#WebGL-output").append(renderer.domElement);
 	container = document.getElementById( 'WebGL-output' );
 	container.appendChild( renderer.domElement );
-   	controls = new THREE.OrbitControls( camera, renderer.domElement );
+   	//controls = new THREE.OrbitControls( camera, renderer.domElement );
    	
    	mesh_obj = createMesh(new THREE.PlaneGeometry(200, 140, 1, 1), {color: 0x00ff00});
    	mesh_obj.rotation.x = -0.5 * Math.PI;
