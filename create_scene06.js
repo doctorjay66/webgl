@@ -16,7 +16,7 @@ function createScene(param) {
    	    scene = new THREE.Scene(),
    	    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000),
    	    renderer = new THREE.WebGLRenderer(),
-   	    keyboard = new KeyboardState(),
+   	    //keyboard = new KeyboardState(),
    	    mesh_obj,
    	    plane_mesh,
    	    ball_mesh,
