@@ -67,10 +67,10 @@ function createScene(param) {
    	shot_target_mesh.name = "shot_target";
    	scene.add(shot_target_mesh);
    	
-   	da_obj['scene'] = scene;
+   	/*da_obj['scene'] = scene;
    	da_obj['player_y'] = 2.5; //player y center
    	da_obj['player_j_y'] = 4; //jump hight
-   	da_obj['ball'] = ball_mesh;
+   	da_obj['ball'] = ball_mesh;*/
    	
    	intersectObjectsList.push(plane_mesh); 	 
    	intersectObjectsList.push(shot_target_mesh);   	
