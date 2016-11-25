@@ -37,7 +37,9 @@ function createScene(param) {
    	document.addEventListener('mousedown', onDocumentMouseDown, false);
    	
    	renderer.setSize(window.innerWidth, window.innerHeight);
-   	$("#WebGL-output").append(renderer.domElement);
+   	//$("#WebGL-output").append(renderer.domElement);
+	container = document.getElementById( 'WebGL-output' );
+	container.appendChild( renderer.domElement );
    	controls = new THREE.OrbitControls( camera, renderer.domElement );
    	
    	mesh_obj = createMesh(new THREE.PlaneGeometry(200, 140, 1, 1), {texture: '../assets/textures/campo_1.jpg'});
