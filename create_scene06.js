@@ -75,3 +75,14 @@ function createScene(param) {
    	
    	var loader = new THREE.JSONLoader();
    	var frames = [];
+    camera.position = param.camera_pos;
+    camera.lookAt(scene.position);
+    render();
+    
+    function render() {
+    	var delta = clock.getDelta();
+    	renderer.render(scene, camera);
+    	requestAnimationFrame(render);
+
+    }
+}
