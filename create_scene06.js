@@ -34,7 +34,7 @@ function createScene(param) {
                     morphTargets: true,
                     vertexColors: THREE.FaceColors});
    	    
-   	document.addEventListener('mousedown', onDocumentMouseDown, false);
+   	//document.addEventListener('mousedown', onDocumentMouseDown, false);
    	
    	renderer.setSize(window.innerWidth, window.innerHeight);
    	//$("#WebGL-output").append(renderer.domElement);
@@ -42,7 +42,7 @@ function createScene(param) {
 	container.appendChild( renderer.domElement );
    	controls = new THREE.OrbitControls( camera, renderer.domElement );
    	
-   	mesh_obj = createMesh(new THREE.PlaneGeometry(200, 140, 1, 1), {texture: '../assets/textures/campo_1.jpg'});
+   	mesh_obj = createMesh(new THREE.PlaneGeometry(200, 140, 1, 1), {color: 0x00ff00});
    	mesh_obj.rotation.x = -0.5 * Math.PI;
    	plane_mesh = mesh_obj;
    	plane_mesh.name = "play_field";
