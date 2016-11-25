@@ -70,8 +70,13 @@ function init()
 	
 }
 
-	function animate() 
+function animate() 
 {
     requestAnimationFrame( animate );
 	render();		
+}
+
+function render() 
+{
+	renderer.render( scene, camera );
 }
