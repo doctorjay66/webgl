@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digirep</title>
+    <script type="text/javascript" src="Three-r60.js"></script>
+    <script type="text/javascript" src="create_scene06.js"></script>
+    <style>
+        body {
+            /* set margin to 0 and overflow to hidden, to go fullscreen */
+            margin: 0;
+            overflow: hidden;
+            background-color: #b0c4de;
+        }
+    </style>
+</head>
+<body>
+<!-- Div which will hold the Output -->
+<div id="WebGL-output">
+</div>
+<script type="text/javascript">
+  $(function () {     
+	createScene({camera_pos:new THREE.Vector3(0, 50, 110)});
+	
+  });
+</script>
+</body>
+</html>
