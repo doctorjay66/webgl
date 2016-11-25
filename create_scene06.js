@@ -15,7 +15,7 @@ function createScene(param) {
 	var clock = new THREE.Clock(),
    	    scene = new THREE.Scene(),
    	    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000),
-   	    renderer = new THREE.WebGLRenderer(),
+   	    renderer/* = new THREE.WebGLRenderer()*/,
    	    //keyboard = new KeyboardState(),
    	    mesh_obj,
    	    plane_mesh,
@@ -35,7 +35,10 @@ function createScene(param) {
                     vertexColors: THREE.FaceColors});
    	    
    	//document.addEventListener('mousedown', onDocumentMouseDown, false);
-   	
+   	if ( Detector.webgl )
+		renderer = new THREE.WebGLRenderer( {antialias:true} );
+	else
+		renderer = new THREE.CanvasRenderer(); 
    	renderer.setSize(window.innerWidth, window.innerHeight);
    	//$("#WebGL-output").append(renderer.domElement);
 	container = document.getElementById( 'WebGL-output' );
