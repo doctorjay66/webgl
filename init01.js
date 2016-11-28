@@ -13,11 +13,18 @@ var mouseX = 0, mouseY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
-var clock = new THREE.Clock();
+var clock = new THREE.Clock(), keyboard = new KeyboardState();
 
 var start = false;
 
+var PLAYERS = {}, INTERSECTED, LAST_SELECTED, SELECTED, SELECTED_PLAYER, ground, set_action_phase = false,
+    mouse = new THREE.Vector2(), offset = new THREE.Vector3(), up_pressed, READY=1, WAIT=0, OVER=-1, action_list = [],
+    user_action, SHOOT=5, dest_point, shot_target_mesh, ball, unit_meter = 4.0, shot_target_ratio = 2.70/7;
+
 function init() {
+	document.addEventListener('mousedown', onDocumentMouseDown, false);
+    document.addEventListener('mousemove', onDocumentMouseMove, false );
+    document.addEventListener('mouseup', onDocumentMouseUp, false ); 
 	container = document.getElementById( 'container' );
 
 	camera = new THREE.PerspectiveCamera( 45, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
@@ -31,11 +38,24 @@ function init() {
 	var planeGeometry = new THREE.PlaneBufferGeometry(35*4*2, 35*4*2, 1, 1);
 	var planeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
 	//var planeMaterial = new THREE.MeshBasicMaterial({map:mesh_text});
-	var ground = new THREE.Mesh(planeGeometry, planeMaterial);
+	ground = new THREE.Mesh(planeGeometry, planeMaterial);
 	ground.receiveShadow = true;
 	ground.position.set( 0, FLOOR, 0 );
 	ground.rotation.x = -Math.PI/2;
 	scene.add( ground );
+	var ballGeom = new THREE.SphereGeometry(0.6, 20, 20);
+	var ballMat =  new THREE.MeshLambertMaterial({color: 0xffffff});
+	ball = new THREE.Mesh(ballGeom, ballMat);
+	//ball.position.y = BALL_Y;
+	ball.position.x = 15*4;
+	scene.add(ball);
+	shot_target_mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(unit_meter*7, shot_target_ratio*7*unit_meter, 1, 1), 
+	                                  new THREE.MeshBasicMaterial({color: 0xffffff}));	
+    shot_target_mesh.position.x = 35*4-12;
+    shot_target_mesh.rotation.y = -0.5 * Math.PI;
+    //shot_target_mesh.position.y += 5;
+    scene.add(shot_target_mesh);
+
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.position.set(200, 300, 140);
     spotLight.castShadow = true;
@@ -85,30 +105,28 @@ function createScene( geometry, materials, x, y, z, s, color ) {
 	}
     mesh.position.set(x, y, z)
     scene.add( mesh );
+    PLAYERS['p1'] = mesh;
     //var animation = new THREE.Animation( mesh, geometry.animation );
-}
-
-function initGUI() {
-    var gui = new dat.GUI();
-    var controls = {
-		start_actions: function() {			
-			start = true;
-			//console.log(mesh.geometry.animations);
-			mesh.animations['run'].play(0, 1.0);
-		},
-		stop_actions: function() {			
-			start = false;
-			//console.log(mesh.geometry.animations);
-			mesh.animations['run'].stop();
-		}     
-    };
-    gui.add( controls, 'start_actions' ).name("Start Action");
-    gui.add( controls, 'stop_actions' ).name("Stop Action");
 }
 
 function animate() {
     requestAnimationFrame( animate, renderer.domElement );
     var delta = clock.getDelta();
     THREE.AnimationHandler.update( delta * 0.5 );
+    up_pressed = false;
+    movePLayerByKey(delta);
+    if(start) {
+        for(var curr_action=0;curr_action<action_list.length;curr_action++) {
+    	    executeIfReady(action_list[curr_action], delta)
+    	}
+    }
     renderer.render( scene, camera );
+}
+
+function direction(p1, p2) {
+    var dir = new THREE.Vector3(0, 0, 0);
+
+    dir.subVectors(p1, p2);
+    dir.normalize();
+    return dir;
 }
