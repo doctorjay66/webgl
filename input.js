@@ -1,9 +1,36 @@
 function initGUI() {
     var gui = new dat.GUI();
     var controls = {
+        set_ball:function() {
+        	if(SELECTED_PLAYER) {
+			    //console.log(SELECTED_PLAYER.position);
+			    ball.position.copy(SELECTED_PLAYER.position);			    
+			    ball.position.y = FLOOR + 0.3;//BALL_Y;
+			    //console.log(ball.position);
+			    SELECTED_PLAYER.has_ball = true;
+			}
+		},
 		shoot: function() {
 		    set_action_phase = true;
 		    user_action = SHOOT;
+		},
+		pass: function() {
+		    set_action_phase = true;
+		    user_action = PASS;
+		    //rotate_mash(SELECTED_PLAYER,0,0.78);
+		},
+		cross: function() {
+		    set_action_phase = true;
+		    user_action = CROSS;
+		    //rotate_mash(SELECTED_PLAYER,0,0.78);
+		},
+		cross_head: function() {
+		    set_action_phase = true;
+		    user_action = CROSS_HEAD;
+		},	
+		set_camera: function() {
+		    camera.lookAt(new THREE.Vector3(120, 0, 0));
+		    camera.position.set( -25.0, 5.0, 0 );
 		},
 		start_actions: function() {			
 			if(!dest_point){alert('No Dest!');SELECTED_PLAYER.material.opacity = 1;return;}
@@ -29,17 +56,36 @@ function initGUI() {
 			//mesh.animations['run'].stop();
 		}     
     };
+    gui.add( controls, 'set_ball' ).name("Set ball");
     gui.add( controls, 'shoot' ).name("Tiro");
+    gui.add( controls, 'pass' ).name("Pass");
+    gui.add( controls, 'cross' ).name("Cross");
+    gui.add( controls, 'cross_head' ).name("Cross Testa");
+    gui.add( controls, 'set_camera' ).name("camera");
     gui.add( controls, 'start_actions' ).name("Start Action");
     gui.add( controls, 'stop_actions' ).name("Stop Action");
 }
 
 function movePLayerByKey(d) {
     keyboard.update();
-	if ( keyboard.pressed("up") ) {
-		up_pressed = true;
+	if ( SELECTED_PLAYER && keyboard.pressed("up") ) {
+	    if(!up_pressed) {
+	        SELECTED_PLAYER.animations['run'].play(0, 1.0);
+		    up_pressed = true;
+		}		
 		SELECTED_PLAYER.translateZ(10*d);
 	}
+	if ( keyboard.up("up") ) {
+		if (SELECTED_PLAYER) 
+		    SELECTED_PLAYER.animations['run'].stop();		
+		up_pressed = false;
+	}
+	if ( keyboard.pressed("left") && p) {
+		SELECTED_PLAYER.rotation.y += d;
+	}
+	if ( keyboard.pressed("right") && p) {
+		SELECTED_PLAYER.rotation.y -= d;
+	}	
 }
 
 //var projector = new THREE.Projector();
@@ -55,19 +101,25 @@ function onDocumentMouseDown(event) {
     vector = vector.unproject(camera);
     raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
     if(set_action_phase) { //select the field when in set action to assign a dest. point
-		intersects = raycaster.intersectObjects( [ground/*, shot_target_mesh*/] );
+		intersects = raycaster.intersectObjects( [ground, shot_target_mesh] );
 		//console.log(intersects);
 	} else {
-		intersects = raycaster.intersectObjects( [PLAYERS['p1']/*, PLAYERS['p2']*/] );
+		intersects = raycaster.intersectObjects( [PLAYERS['p1'], PLAYERS['p2']] );
 	}
 	if ( intersects.length > 0 ) {
 	    if(set_action_phase) { //action dest. point
-			dest_point = intersects[ 0 ].point;
-			console.log(intersects[ 0 ].point);
-			/*if(user_action == CROSS_HEAD && !has_clicked) { //set the head strike and head shoot dest.
-			    head_point.copy(dest_point);               //the first click is for the strike point
-			    has_clicked = true; //is the first click
-			}*/
+			if(user_action == CROSS_HEAD) {
+			    num_click++;
+			    if(num_click==1) { //set the head strike dest.
+			        dest_point = intersects[ 0 ].point;  //the first click is for the strike point
+			    } else if(num_click==2) { //set the head shoot dest.
+			        j_dest.copy(intersects[ 0 ].point); //the second click is for the strike dest
+			        console.log(j_dest);
+			    }
+			} else {
+			    dest_point = intersects[ 0 ].point;
+			}			
+			console.log(num_click);
 		} else {
 		    SELECTED = intersects[ 0 ].object;
 		    SELECTED_PLAYER = SELECTED;
@@ -96,12 +148,12 @@ function onDocumentMouseMove( event ) {
 		var intersects = raycaster.intersectObject( ground );
 					//SELECTED.position.copy( intersects[ 0 ].point.sub( offset ) );
 		SELECTED.position.copy( intersects[ 0 ].point);
-		SELECTED.position.y = 4.5;					
+		SELECTED.position.y = 0.0;					
 		return;
 
 	}    
  
-    var intersects = raycaster.intersectObjects( [PLAYERS['p1']/*, PLAYERS['p2']*/]  );
+    var intersects = raycaster.intersectObjects( [PLAYERS['p1'], PLAYERS['p2']]  );
 	if ( intersects.length > 0 ) {
 		if ( INTERSECTED != intersects[ 0 ].object ) {
 			INTERSECTED = intersects[ 0 ].object;

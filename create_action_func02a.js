@@ -14,8 +14,8 @@ function createUserAction(/*user_action*/) {
                       'd_source':ball.position, speed:30});
         addStartActionEvent('end', action_list[a.id-1], a/*, action_list*/);
         
-        /*var a = {};
-        var s_dest = new THREE.Vector3(0,0,0);
+        var a = {};
+        /*var s_dest = new THREE.Vector3(0,0,0);
         var s_dest1 = new THREE.Vector3(0,0,0);
         //s_dest.copy(dest_point);
         var s_dir = direction(dest_point, PLAYERS['save'].position);
@@ -23,10 +23,10 @@ function createUserAction(/*user_action*/) {
         console.log(s_dir);
         s_dest1.copy(PLAYERS['save'].position);
         s_dest1.add(s_dir);
-        console.log(s_dest1);
-        setAction(a, {'name':'save', 'mesh':PLAYERS['save'], 'dest':s_dest1, 'state':WAIT, 
+        console.log(s_dest1);*/
+        setAction(a, {'name':'save', 'mesh':PLAYERS['save'], 'dest':b_dest, 'state':WAIT, 
                       'd_source':PLAYERS['save'].position, speed:20});
-        addStartActionEvent('end', action_list[a.id-2], a);*/    
+        addStartActionEvent('end', action_list[a.id-2], a);
     } else if(user_action == PASS) {
         var a = {};        
         setAction(a, {'name':'kickr', 'mesh':SELECTED_PLAYER, 'dest':dest_point, 'state':READY, 
@@ -43,7 +43,7 @@ function createUserAction(/*user_action*/) {
         var a = {};
         var p_dest = new THREE.Vector3(0,0,0);
         p_dest.copy(dest_point);
-        p_dest.y = PLAYER_Y;
+        p_dest.y = 0.0;
         setAction(a, {'name':'run', 'mesh':PLAYERS['p2'], 'dest':p_dest, 'state':WAIT, 
                       'd_source':PLAYERS['p2'].position, speed:10});
         addStartActionEvent('end', action_list[a.id-2], a/*, action_list*/);
@@ -55,35 +55,36 @@ function createUserAction(/*user_action*/) {
         var a = {};
         var p_dest = new THREE.Vector3(0,0,0);
         p_dest.copy(dest_point);
-        p_dest.y = PLAYER_Y;
+        p_dest.y = 0.0;
         setAction(a, {'name':'run', 'mesh':PLAYERS['p2'], 'dest':p_dest, 'state':WAIT, 
                       'd_source':PLAYERS['p2'].position, speed:10});
         addStartActionEvent('end', action_list[a.id-2], a/*, action_list*/);
     } else if(user_action == CROSS_HEAD) {
         var a = {};
+        num_click=0;
         setAction(a, {'name':'kickr', 'mesh':SELECTED_PLAYER, 'dest':dest_point, 'state':READY, 
                       'd_source':ball.position/*, 'to_activate':[1,2], 'when_activate':'now'*/});
 		setCrossAction(true);
         var a = {};
         var p_dest = new THREE.Vector3(0,0,0);
         p_dest.copy(dest_point);
-        p_dest.y = PLAYER_Y;        
+        p_dest.y = 0.0;        
         setAction(a, {'name':'run', 'mesh':PLAYERS['p2'], 'dest':p_dest, 'state':WAIT, 
                       'd_source':PLAYERS['p2'].position, speed:10, 'to_activate':[3], 'when_activate':'now'});
         addStartActionEvent('end', action_list[a.id-2], a/*, action_list*/);
         var a = {};
-        j_dest = new THREE.Vector3(35*4-12,2,1);
+        //j_dest = THREE.Vector3(35*4-12,2,1);
         head_point = new THREE.Vector3(0,0,0);
         head_point.copy(p_dest);
-        head_point.y = 8;
+        head_point.y = 7.5;
         console.log(head_point);
         setAction(a, {'name':'jump', 'mesh':PLAYERS['p2'], 'dest':head_point, 'state':WAIT, 
                       'd_source':p_dest, speed:2/*, 'to_activate':[4], 'when_activate':'1,end'*/});
         addStartActionEvent('end', action_list[a.id-1], a/*, action_list*/);
         var a = {};
         setAction(a, {'name':'move', 'mesh':ball, 'dest':j_dest, 'state':WAIT, 
-                      'd_source':head_point, speed:2});
-        addStartActionEvent('end', action_list[a.id-1], a/*, action_list*/);
+                      'd_source':head_point, speed:20});
+        addStartActionEvent('end', action_list[a.id-1], a);
     }
 }
 
@@ -148,12 +149,7 @@ function direction(p1, p2) {
 function performEventHandler(e, esa, ta/*, action_list*/) {
 	if(e=='end') {
    		console.log('end');    	
-    		//ta.dir = direction(ta.dest, ta.mesh.position);//because friction overcome dest
     	ta.state = READY;
-    	//console.log(ta.mesh);
-    	/*if(ta.mesh.animations) {
-	    	ta.mesh.animations[ta.name].play(0, 1.0);
-	    }*/
 	}
 }
 
